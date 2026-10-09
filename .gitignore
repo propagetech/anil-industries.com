@@ -1,0 +1,4 @@
+tools/node_modules/
+drafts/
+.DS_Store
+__pycache__/

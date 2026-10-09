@@ -1,0 +1,13 @@
+{
+  "name": "Anil Industries",
+  "short_name": "Anil Industries",
+  "description": "Cold rolled and hardened and tempered steel strips, Bawana, Delhi, since 1976.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F5F5F2",
+  "theme_color": "#17181B",
+  "icons": [
+    { "src": "imgs/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "imgs/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
