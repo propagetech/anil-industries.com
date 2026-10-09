@@ -182,7 +182,9 @@ h3 { font-weight: 650; font-stretch: 106%; font-size: 1.1875rem; line-height: 1.
   display: inline-flex; align-items: center;
   background: #fff; border: 1px solid var(--line); border-radius: 2px; padding: 7px 10px;
 }
-.brand img { height: 26px; width: auto; }
+.brand img { height: 24px; width: auto; }
+@media (max-width: 399px) { .brand { padding: 6px 8px; } .nav-toggle { padding: 8px 10px; gap: 8px; } }
+@media (max-width: 339px) { .nav-toggle { min-width: 44px; } .nav-toggle__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; opacity: 0; } }
 @media (min-width: 400px) { .brand img { height: 30px; } }
 @media (min-width: 1200px) { .brand img { height: 32px; } }
 
@@ -301,7 +303,7 @@ h3 { font-weight: 650; font-stretch: 106%; font-size: 1.1875rem; line-height: 1.
 .hero h1 { max-width: 13ch; }
 @media (min-width: 960px) { .hero__grid { grid-template-columns: 7fr 5fr; gap: 56px; align-items: end; } }
 
-.hero__plate { position: relative; margin: 0; padding: 0 0 0 0; }
+.hero__plate { position: relative; margin: 0; width: 100%; max-width: 560px; }
 .hero__img {
   background: #fff; border: 1px solid var(--ink); padding: 24px;
   clip-path: polygon(0 0, calc(100% - var(--chamfer)) 0, 100% var(--chamfer), 100% 100%, 0 100%);
@@ -312,7 +314,8 @@ h3 { font-weight: 650; font-stretch: 106%; font-size: 1.1875rem; line-height: 1.
   background: var(--surface); border: 1px solid var(--ink);
   box-shadow: 8px 8px 0 -1px var(--paper), 8px 8px 0 0 var(--ink);
 }
-@media (min-width: 640px) { .plate { position: absolute; left: -28px; bottom: -32px; margin: 0; width: min(340px, 82%); } }
+@media (min-width: 640px) { .plate { position: absolute; left: 16px; bottom: -32px; margin: 0; width: min(340px, 82%); } }
+@media (min-width: 960px) { .plate { left: -28px; } }
 .plate > span { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 14px; }
 .plate__head { background: var(--ink); color: #fff; font-family: var(--font-data); font-size: 0.75rem; letter-spacing: 0.09em; text-transform: uppercase; }
 .plate__row { border-top: 1px solid var(--line); }
@@ -474,7 +477,7 @@ input:focus, select:focus { border-color: var(--ink); }
 /* --------------------------------------------------------------------------
    Matrix tables (grades)
    -------------------------------------------------------------------------- */
-.tablewrap { overflow-x: auto; border: 1px solid var(--ink); background: var(--surface); }
+.tablewrap { position: relative; overflow-x: auto; border: 1px solid var(--ink); background: var(--surface); }
 .matrix { width: 100%; min-width: 900px; border-collapse: separate; border-spacing: 0; font-family: var(--font-data); font-size: 0.875rem; }
 .matrix--chem { min-width: 820px; }
 .matrix th, .matrix td { padding: 10px 11px; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line-soft); color: var(--ink); }
