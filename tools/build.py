@@ -75,10 +75,64 @@ https://:project.pages.dev/*
 
 https://:version.:project.pages.dev/*
   X-Robots-Tag: noindex
+
+# Old builder site, kept for reference only. It needs Google Fonts / Maps and inline scripts,
+# so the strict CSP above is detached (!) and replaced with a looser one scoped to /archive/.
+/archive/*
+  ! Content-Security-Policy
+  Content-Security-Policy: {ARCHIVE_CSP}
+  X-Robots-Tag: noindex, nofollow
 """
     with open(os.path.join(OUT, "_headers"), "w", encoding="utf-8") as fh:
         fh.write(body)
     print("wrote _headers")
+
+
+ARCHIVE_CSP = ("default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' "
+               "https://maps.googleapis.com https://maps.gstatic.com https://cdnjs.cloudflare.com; "
+               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+               "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; "
+               "connect-src 'self' https://maps.googleapis.com; "
+               "frame-src https://www.google.com https://maps.google.com; "
+               "form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'")
+ARCHIVE_PAGES = ["index.html", "about.html", "coled-rolled-steel-strips.html",
+                 "hardened-tempered-steel.html", "qualities.html", "contact.html"]
+ARCHIVE_DIRS = ["css", "fonts", "imgs", "js"]
+
+
+def fix_file(path, fn):
+    with open(path, encoding="utf-8") as f:
+        t = f.read()
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(fn(t))
+
+
+def copy_archive():
+    """Publish the old builder site at /archive/ as a noindex reference copy. archive/ stays the
+    untouched source; the copy gets a robots meta, its links to the never-existing home.html (and
+    root "/", which would leave the archive) pointed at the archive's own index.html, its CSS font
+    URLs fixed (they pointed at css/fonts/, the files are in fonts/) and its Google Analytics loader
+    removed (no cookies or tracking on this domain). Its 404.html, robots.txt, sitemap.xml and
+    rename-* tooling notes are not published."""
+    import shutil
+    src, dst = os.path.join(ROOT, "archive"), os.path.join(OUT, "archive")
+    shutil.rmtree(dst, ignore_errors=True)
+    for d in ARCHIVE_DIRS:
+        shutil.copytree(os.path.join(src, d), os.path.join(dst, d))
+    for name in os.listdir(os.path.join(dst, "css")):
+        fix_file(os.path.join(dst, "css", name), lambda t: t.replace("url('fonts/", "url('../fonts/"))
+    ga = re.compile(r"loadScriptAsync\('https://www\.googletagmanager\.com/gtag/js.*?\n\}\)\n?", re.S)
+    fix_file(os.path.join(dst, "js", "main-1.js"), lambda t: ga.sub("", t, count=1))
+    for name in ARCHIVE_PAGES:
+        with open(os.path.join(src, name), encoding="utf-8") as f:
+            h = f.read()
+        h = h.replace("<head>", '<head>\n<meta name="robots" content="noindex, nofollow"/>', 1)
+        h = re.sub(r'href="home\.html(#[^"]*)?"', 'href="index.html"', h)
+        h = h.replace('href="/"', 'href="index.html"')
+        h = re.sub(r'href="([\w-]+\.html)#"', r'href="\1"', h)
+        with open(os.path.join(dst, name), "w", encoding="utf-8") as f:
+            f.write(h)
+    print("wrote archive/ (%d pages)" % len(ARCHIVE_PAGES))
 
 
 # --------------------------------------------------------------------------------------------
@@ -1295,6 +1349,7 @@ def main():
                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + "</urlset>\n")
     print("wrote sitemap.xml")
     write_headers()
+    copy_archive()
 
 
 if __name__ == "__main__":

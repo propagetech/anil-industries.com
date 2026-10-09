@@ -25,7 +25,11 @@ Research: `docs/research/` (competitors, keywords, design benchmark).
   Self-hosted woff2 in `public/fonts/`. No CDN, no cookies, no third-party requests.
 - `public/_redirects` (Cloudflare Pages) 301s the old `.html` URLs, including the misspelt
   `coled-rolled-steel-strips.html`, plus `/404.html` and `/favicon.ico`.
-- `archive/` holds the old builder site (repo only, not published).
+- `archive/` holds the old builder site (untouched source). `build.py` copies its 6 pages and assets
+  to `public/archive/` as a noindex reference (robots meta + `X-Robots-Tag`, its own looser CSP in
+  `_headers`, `home.html` links pointed at `index.html`, CSS font paths fixed, Google Analytics loader
+  stripped). Its old contact form and Google Map rely on the dead builder backend and stay broken.
+  The copy is verbatim old content, so the dash rule and contrast audit exclude it.
 - Images live in `public/imgs/`. The logo/favicon tools take cwd-relative paths, so run them from
   `public/` (`cd public && node ../tools/make-favicons.mjs imgs/logo.webp`).
 
@@ -63,7 +67,7 @@ python3 tools/build.py
 python3 -m http.server 8123 -d public     # in another shell
 (cd public && node ../tools/contrast-audit.mjs)   # must print RESULT: PASS
 python3 ../_rebuild-kit/tools/linkcheck.py public
-grep -rn "—\|–" public && echo FAIL || echo OK
+grep -rn "—\|–" --exclude-dir=archive public && echo FAIL || echo OK
 # responsive sweep (run from the repo root so it finds tools/node_modules; pass the paths):
 node ~/.claude/skills/responsive-qa/scripts/qa-check.mjs / /grades/ /contact/ /hardened-tempered-steel-strips/ /cold-rolled-steel-strips/ /applications/ /quality/ /about/ /faq/ /404.html
 ```
