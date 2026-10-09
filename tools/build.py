@@ -515,14 +515,15 @@ def page_home():
 
     body = f'''<main id="main">
 <section class="hero">
+  <div class="hero__stage">
   <div class="wrap hero__grid">
     <div class="hero__copy">
-      <p class="eyebrow">Cold rolled and H&amp;T steel strip &#183; Bawana, Delhi &#183; Since 1976</p>
+      <p class="eyebrow eyebrow--on-dark">Cold rolled and H&amp;T steel strip &#183; Bawana, Delhi &#183; Since 1976</p>
       <h1>Spring steel strip, processed to your specification.</h1>
       <p class="lede">Anil Industries processes and supplies cold rolled and hardened and tempered steel strip from 0.10 to 4.50 mm thick and 5 to 500 mm wide, in 14 carbon and alloy grades, for makers of saw blades, springs, compressor valves and automotive parts.</p>
       <div class="actions">
         <a class="btn btn--primary btn--lg" href="contact/">Request a quote</a>
-        <a class="arrow-link" href="grades/">Find your grade</a>
+        <a class="arrow-link arrow-link--on-dark" href="grades/">Find your grade</a>
       </div>
     </div>
     <figure class="hero__plate">
@@ -534,6 +535,7 @@ def page_home():
         <span class="plate__row plate__row--half"><span><span class="plate__k">Grades</span><span class="plate__v">14</span></span><span><span class="plate__k">Standards</span><span class="plate__v">8</span></span></span>
       </figcaption>
     </figure>
+  </div>
   </div>
   <div class="wrap hero__ruler">
     <p class="hero__ruler-label"><span class="label">Thickness range</span> Hardened and tempered 0.10 to 4.00 mm. Cold rolled 0.20 to 4.50 mm.</p>

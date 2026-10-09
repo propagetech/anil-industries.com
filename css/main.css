@@ -298,9 +298,24 @@ h3 { font-weight: 650; font-stretch: 106%; font-size: 1.1875rem; line-height: 1.
 /* --------------------------------------------------------------------------
    Home hero
    -------------------------------------------------------------------------- */
-.hero { padding-top: clamp(40px, 2rem + 3vw, 88px); }
+/* Night stage behind copy and spec plate. The coil face (tools/make_hero_bg.py) is a separate
+   layer so text always sits on solid --night: the image itself falls off to night on the left. */
+.hero__stage {
+  position: relative; isolation: isolate; background: var(--night); color: var(--on-night-muted);
+  padding-block: clamp(40px, 2rem + 3vw, 88px) clamp(56px, 3rem + 3vw, 104px);
+  border-bottom: 6px solid var(--brand);
+}
+.hero__stage::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: url("../imgs/hero-coil-tall.webp") no-repeat 50% 100% / auto 78%;
+}
+@media (min-width: 960px) {
+  .hero__stage::before { background-image: url("../imgs/hero-coil.webp"); background-position: 100% 50%; background-size: cover; }
+}
+.hero__stage :focus-visible { outline-color: var(--focus-on-night); }
 .hero__grid { display: grid; gap: 48px; }
-.hero h1 { max-width: 13ch; }
+.hero h1 { max-width: 13ch; color: #fff; }
+.hero .lede { color: var(--on-night-muted); }
 @media (min-width: 960px) { .hero__grid { grid-template-columns: 7fr 5fr; gap: 56px; align-items: end; } }
 
 .hero__plate { position: relative; margin: 0; width: 100%; max-width: 560px; }
@@ -314,6 +329,7 @@ h3 { font-weight: 650; font-stretch: 106%; font-size: 1.1875rem; line-height: 1.
   background: var(--surface); border: 1px solid var(--ink);
   box-shadow: 8px 8px 0 -1px var(--paper), 8px 8px 0 0 var(--ink);
 }
+.hero .plate { box-shadow: 8px 8px 0 -1px var(--night), 8px 8px 0 0 var(--brand-on-night); }
 @media (min-width: 640px) { .plate { position: absolute; left: 16px; bottom: -32px; margin: 0; width: min(340px, 82%); } }
 @media (min-width: 960px) { .plate { left: -28px; } }
 .plate > span { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 14px; }
