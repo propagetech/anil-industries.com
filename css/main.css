@@ -298,19 +298,21 @@ h3 { font-weight: 650; font-stretch: 106%; font-size: 1.1875rem; line-height: 1.
 /* --------------------------------------------------------------------------
    Home hero
    -------------------------------------------------------------------------- */
-/* Night stage behind copy and spec plate. The coil face (tools/make_hero_bg.py) is a separate
-   layer so text always sits on solid --night: the image itself falls off to night on the left. */
+/* Night stage behind copy and spec plate. The slitting line image (tools/make_hero_bg.py, AI) is a
+   separate layer so text always sits on solid --night: the image itself falls off to night under
+   the copy. Phones get a portrait crop as a band below the spec plate. */
 .hero__stage {
   position: relative; isolation: isolate; background: var(--night); color: var(--on-night-muted);
-  padding-block: clamp(40px, 2rem + 3vw, 88px) clamp(56px, 3rem + 3vw, 104px);
+  padding-block: clamp(40px, 2rem + 3vw, 88px) max(240px, 50vw);   /* band below the plate scales with the crop */
   border-bottom: 6px solid var(--brand);
 }
 .hero__stage::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: url("../imgs/hero-coil-tall.webp") no-repeat 50% 100% / auto 78%;
+  background: url("../imgs/hero-factory-tall.webp") no-repeat 50% 100% / 100% auto;
 }
 @media (min-width: 960px) {
-  .hero__stage::before { background-image: url("../imgs/hero-coil.webp"); background-position: 100% 50%; background-size: cover; }
+  .hero__stage { padding-block: 112px 120px; }
+  .hero__stage::before { left: 50%; background-image: url("../imgs/hero-factory.webp"); background-position: 0 50%; background-size: cover; }
 }
 .hero__stage :focus-visible { outline-color: var(--focus-on-night); }
 .hero__grid { display: grid; gap: 48px; }
@@ -318,20 +320,14 @@ h3 { font-weight: 650; font-stretch: 106%; font-size: 1.1875rem; line-height: 1.
 .hero .lede { color: var(--on-night-muted); }
 @media (min-width: 960px) { .hero__grid { grid-template-columns: 7fr 5fr; gap: 56px; align-items: end; } }
 
-.hero__plate { position: relative; margin: 0; width: 100%; max-width: 560px; }
-.hero__img {
-  background: #fff; border: 1px solid var(--ink); padding: 24px;
-  clip-path: polygon(0 0, calc(100% - var(--chamfer)) 0, 100% var(--chamfer), 100% 100%, 0 100%);
-}
-.hero__img img { width: 100%; max-width: 420px; margin-inline: auto; }
+/* Spec plate: stands alone, low in the right column */
+.hero__plate { width: 100%; max-width: 380px; }
+@media (min-width: 960px) { .hero__plate { justify-self: end; } }
 .plate {
-  position: relative; margin: -40px 0 0 16px; display: grid;
+  margin: 0; display: grid;
   background: var(--surface); border: 1px solid var(--ink);
-  box-shadow: 8px 8px 0 -1px var(--paper), 8px 8px 0 0 var(--ink);
+  box-shadow: 8px 8px 0 -1px var(--night), 8px 8px 0 0 var(--brand-on-night);
 }
-.hero .plate { box-shadow: 8px 8px 0 -1px var(--night), 8px 8px 0 0 var(--brand-on-night); }
-@media (min-width: 640px) { .plate { position: absolute; left: 16px; bottom: -32px; margin: 0; width: min(340px, 82%); } }
-@media (min-width: 960px) { .plate { left: -28px; } }
 .plate > span { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 14px; }
 .plate__head { background: var(--ink); color: #fff; font-family: var(--font-data); font-size: 0.75rem; letter-spacing: 0.09em; text-transform: uppercase; }
 .plate__row { border-top: 1px solid var(--line); }
@@ -362,6 +358,8 @@ h3 { font-weight: 650; font-stretch: 106%; font-size: 1.1875rem; line-height: 1.
 .ruler__n:first-child { transform: none; }
 .ruler__n:last-child { transform: translateX(-100%); }
 @media (max-width: 639px) { .ruler__n:nth-child(even) { display: none; } .ruler__n:last-child { display: block; } }
+/* "4.5 mm" is pinned right and meets "4.0" below ~475px */
+@media (max-width: 479px) { .ruler__n:nth-child(9) { display: none; } }
 .ruler__bar {
   position: absolute; height: 20px; display: flex; align-items: center; padding-left: 8px;
   font-family: var(--font-data); font-size: 0.75rem; letter-spacing: 0.04em; white-space: nowrap; color: #fff;
@@ -781,6 +779,9 @@ input:focus, select:focus { border-color: var(--ink); }
   }
   .topline, .site-header, .site-footer, .cta-band, .skip, .units, [data-print], .crumbs, .finder, .page-hero__img, .stamp--band { display: none !important; }
   .page-hero, .section, .docgrid { padding-block: 8pt !important; border: 0; }
+  .hero__stage { background: none; padding-block: 8pt; border: 0; }
+  .hero__stage::before { display: none; }
+  .hero h1, .hero .lede, .hero .eyebrow { color: #000; }
   .docgrid { display: block; }
   .rail__in { position: static; margin-top: 12pt; }
   .tablewrap { overflow: visible; border: 0; }

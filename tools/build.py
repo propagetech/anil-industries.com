@@ -526,15 +526,14 @@ def page_home():
         <a class="arrow-link arrow-link--on-dark" href="grades/">Find your grade</a>
       </div>
     </div>
-    <figure class="hero__plate">
-      <div class="hero__img"><img src="{ht["img"]}" width="{ht["img_w"]}" height="{ht["img_h"]}" alt="{esc_attr(ht["img_alt"])}" fetchpriority="high" decoding="async"></div>
-      <figcaption class="plate">
+    <div class="hero__plate">
+      <p class="plate">
         <span class="plate__head"><span>Spec plate</span><span>AI / 1976</span></span>
         <span class="plate__row"><span class="plate__k">Thickness</span><span class="plate__v">0.10 to 4.50 <small>mm</small></span></span>
         <span class="plate__row"><span class="plate__k">Width</span><span class="plate__v">5 to 500 <small>mm</small></span></span>
         <span class="plate__row plate__row--half"><span><span class="plate__k">Grades</span><span class="plate__v">14</span></span><span><span class="plate__k">Standards</span><span class="plate__v">8</span></span></span>
-      </figcaption>
-    </figure>
+      </p>
+    </div>
   </div>
   </div>
   <div class="wrap hero__ruler">
@@ -649,7 +648,7 @@ def page_home():
         page_node("", title, desc),
     )
     return dict(slug="", title=title, desc=desc, schema=schema, active="home", body=body,
-                preload=f'<link rel="preload" href="{ht["img"]}" as="image" type="image/webp">\n')
+                preload='<link rel="preload" href="imgs/hero-factory.webp" as="image" type="image/webp" media="(min-width: 960px)">\n')
 
 
 def product_page(key):

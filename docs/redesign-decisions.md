@@ -166,6 +166,13 @@ Objectives" are rewritten plainly as objectives (what we aim for), not results. 
   These would replace the product shots in the heroes and could feed a gallery page.
 - OG card `imgs/og-card.jpg` (1200 x 630) is rendered from the real logo + product photo
   (source `drafts/og.html`, gitignored; regenerate with headless Chrome).
+- **Home hero background (9 Oct 2026):** `imgs/hero-factory.webp` (+ `-tall` for phones), made by
+  `tools/make_hero_bg.py` from `docs/art/hero-slitting-line-source.jpg`, an **AI-generated**
+  illustration of a slitting line (ChatGPT). It is not Anil's works: used only as an unlabelled CSS
+  background, never captioned or described as the Bawana plant. The product photo was removed from
+  the home hero (it repeats in the Products section); the spec plate stays. Owner to confirm slitting
+  is done in-house (section 12, item 1); if not, go back to the procedural coil (commit c66d5b6).
+  Replace with a real photo of the slitting line when supplied.
 
 ## 10. Schema
 
