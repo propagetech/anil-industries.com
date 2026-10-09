@@ -7,15 +7,27 @@ Research: `docs/research/` (competitors, keywords, design benchmark).
 
 ## How the site is made
 
+- **Only `public/` is published.** It is the GitHub Pages artifact (`.github/workflows/deploy.yml`,
+  `path: 'public'`) and the Cloudflare Pages **Build output directory: `public`** (no build command,
+  framework preset None). `docs/`, `tools/`, `archive/`, `CLAUDE.md` and `README.md` live outside it
+  so they are never served: the docs hold owner questions and third-party competitor notes.
 - **Pages are generated** by `python3 tools/build.py` from `tools/site_data.py` (facts + tables) and
-  the layout in `build.py`. Output is plain static HTML that is committed; there is no deploy-time build.
-  Edit the generator, re-run it, never hand-edit generated HTML only.
+  the layout in `build.py`. It writes `public/**/index.html`, `public/404.html`, `public/sitemap.xml`
+  and `public/_headers`. Output is committed; there is no deploy-time build. Edit the generator and
+  re-run it; never hand-edit generated HTML only.
+- `public/_headers` is generated: security headers, a CSP that pins the one inline script (the no-js
+  class swap) by a hash computed from the same string, long caching for fonts/imgs, and noindex on
+  `*.pages.dev`. CSS/JS are not fingerprinted, so they keep the Pages default caching. HSTS is a zone
+  setting turned on after go-live verification, never in `_headers`.
 - Directory URLs (`slug/index.html`), depth-aware **relative** paths (home `css/...`, inner `../css/...`),
   `404.html` root-absolute. Canonical / OG / sitemap / JSON-LD absolute on `https://www.anil-industries.com/`.
 - One `css/main.css`, one `js/main.js` (progressive enhancement only; every feature works with JS off).
-  Self-hosted woff2 in `fonts/`. No CDN, no cookies, no third-party requests.
-- `_redirects` (Cloudflare Pages) 301s the old `.html` URLs, including the misspelt `coled-rolled-steel-strips.html`.
-- `archive/` holds the old builder site (disallowed in robots).
+  Self-hosted woff2 in `public/fonts/`. No CDN, no cookies, no third-party requests.
+- `public/_redirects` (Cloudflare Pages) 301s the old `.html` URLs, including the misspelt
+  `coled-rolled-steel-strips.html`, plus `/404.html` and `/favicon.ico`.
+- `archive/` holds the old builder site (repo only, not published).
+- Images live in `public/imgs/`. The logo/favicon tools take cwd-relative paths, so run them from
+  `public/` (`cd public && node ../tools/make-favicons.mjs imgs/logo.webp`).
 
 ## Design system: "Mill Certificate"
 
@@ -48,10 +60,12 @@ Research: `docs/research/` (competitors, keywords, design benchmark).
 
 ```bash
 python3 tools/build.py
-python3 -m http.server 8123          # in another shell
-node tools/contrast-audit.mjs        # must print RESULT: PASS
-python3 ../_rebuild-kit/tools/linkcheck.py .
-grep -rn "—\|–" *.html */index.html css js && echo FAIL || echo OK
+python3 -m http.server 8123 -d public     # in another shell
+(cd public && node ../tools/contrast-audit.mjs)   # must print RESULT: PASS
+python3 ../_rebuild-kit/tools/linkcheck.py public
+grep -rn "—\|–" public && echo FAIL || echo OK
+# responsive sweep (run from the repo root so it finds tools/node_modules; pass the paths):
+node ~/.claude/skills/responsive-qa/scripts/qa-check.mjs / /grades/ /contact/ /hardened-tempered-steel-strips/ /cold-rolled-steel-strips/ /applications/ /quality/ /about/ /faq/ /404.html
 ```
 
 Do not commit or push without the owner's go-ahead.

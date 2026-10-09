@@ -9,7 +9,7 @@ The image is darkened to the site's night colour under the hero copy, so text co
 always measured against --night. The earlier procedural coil version is in commit c66d5b6.
 
     python3 tools/make_hero_bg.py
-    # writes imgs/hero-factory.webp (right half of the stage, 960px and up)
+    # writes public/imgs/hero-factory.webp (right half of the stage, 960px and up)
     #    and public/imgs/hero-factory-tall.webp (portrait crop, band below the spec plate on phones)
 """
 import os
@@ -18,7 +18,7 @@ from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "docs", "art", "hero-slitting-line-source.jpg")
-OUT = os.path.join(ROOT, "imgs")
+OUT = os.path.join(ROOT, "public", "imgs")
 NIGHT = np.array([0x17, 0x18, 0x1B], dtype=np.float32) / 255.0
 
 

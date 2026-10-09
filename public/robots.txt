@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /archive/
 
 Sitemap: https://www.anil-industries.com/sitemap.xml

@@ -26,9 +26,9 @@ jobs:
 
       - name: Update sitemap lastmod for deploy
         run: |
-          if [ -f sitemap.xml ]; then
+          if [ -f public/sitemap.xml ]; then
             ISODATE=$(date +%Y-%m-%d)
-            sed -i "s/<lastmod>.*<\/lastmod>/<lastmod>${ISODATE}<\/lastmod>/g" sitemap.xml
+            sed -i "s/<lastmod>.*<\/lastmod>/<lastmod>${ISODATE}<\/lastmod>/g" public/sitemap.xml
           fi
 
       - name: Setup Pages
@@ -37,7 +37,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          # Only the built site. docs/, tools/, archive/ and CLAUDE.md must never be served.
+          path: 'public'
 
       - name: Deploy to GitHub Pages
         id: deployment
