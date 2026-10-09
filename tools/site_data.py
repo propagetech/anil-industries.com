@@ -108,7 +108,8 @@ EQ = [
     ["", "75Cr1", "75Cr1", "", "", "", "", ""],
 ]
 
-# Processing route, from the archive diagram imgs/process-route.webp.
+# Processing route, from the archive diagram (archive/imgs/image-description.webp), now illustrated
+# as imgs/steel-coil-processing-flowchart.webp.
 PROCESS = [
     ("Raw material", "Hot rolled coil is received and slit to a workable width."),
     ("Scale breaking and slitting", "Mill scale is cracked off mechanically and the coil is slit."),

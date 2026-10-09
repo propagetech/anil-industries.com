@@ -153,8 +153,10 @@ Objectives" are rewritten plainly as objectives (what we aim for), not results. 
 ## 9. Imagery plan (montage pass, 9 Oct 2026)
 
 - **Used (real product material):** `cold-rolled-steel-strips.webp`, `hardened-and-tempered-steel.webp`
-  (product photos), `process-route.webp` (the archive's processing-route diagram, formerly
-  `image-description.webp`; the route is also rebuilt as an HTML process line).
+  (product photos), `steel-coil-processing-flowchart.webp` (+ `-760` size; an illustrated
+  flowchart of the 8-step route supplied on 9 Oct 2026, replacing the archive's line diagram
+  `archive/imgs/image-description.webp`; the route is also rebuilt as an HTML process line).
+  The original PNG is kept out of the repo.
 - **Not used:** every stock photo from the old site (old filenames `shutterstock...`: coils, press
   brake, welding, plates, tube fabrication, businessman/email) plus social and vision/mission clip-art.
   None shows Anil's own works, and the design benchmark rules out generic stock. They remain in

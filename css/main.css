@@ -653,7 +653,7 @@ input:focus, select:focus { border-color: var(--ink); }
 .checks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
 .checks li { position: relative; padding: 14px 0 14px 36px; border-bottom: 1px solid var(--line); color: var(--ink); }
 .checks li::before { content: ""; position: absolute; left: 4px; top: 21px; width: 14px; height: 7px; border-left: 2px solid var(--brand); border-bottom: 2px solid var(--brand); transform: rotate(-45deg); }
-.diagram { margin: 48px 0 0; max-width: 760px; background: #fff; border: 1px solid var(--ink); padding: 24px; }
+.diagram { margin: 48px 0 0; max-width: 980px; background: #fff; border: 1px solid var(--ink); padding: 24px; }
 .diagram img { width: 100%; }
 .diagram figcaption { margin-top: 14px; font-size: 0.875rem; color: var(--muted); }
 

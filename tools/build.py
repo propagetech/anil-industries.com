@@ -917,8 +917,8 @@ def page_quality():
     </div>
     {process_line(full=True)}
     <figure class="diagram">
-      <a href="{p}imgs/process-route.webp"><img src="{p}imgs/process-route.webp" width="855" height="733" alt="Diagram of the processing route: hot rolled slitting, scale breaking and slitting, acid pickling, annealing, cold rolling, skin passing, cold rolled slitting, then packing with seal, edge protector, steel hoop, metal protector, protective steel sheet and waterproof paper" loading="lazy" decoding="async"></a>
-      <figcaption>Our processing route and coil packing, as drawn for our original site.</figcaption>
+      <a href="{p}imgs/steel-coil-processing-flowchart.webp"><img src="{p}imgs/steel-coil-processing-flowchart-760.webp" srcset="{p}imgs/steel-coil-processing-flowchart-760.webp 760w, {p}imgs/steel-coil-processing-flowchart.webp 1448w" sizes="(min-width: 1060px) 980px, calc(100vw - 50px)" width="1448" height="1086" alt="Illustrated flowchart of the processing route: 1 raw material hot rolled slitting, 2 scale breaking and slitting, 3 acid pickling, 4 annealing, 5 cold rolling, 6 skin passing, 7 cold rolled slitting, 8 packing and dispatch, with the packed coil showing its seal, edge protector, steel hoop, metal protector, protective steel sheet and waterproof paper" loading="lazy" decoding="async"></a>
+      <figcaption>Our processing route, from hot rolled coil to a coil packed for dispatch. Select the image to open it full size.</figcaption>
     </figure>
   </div>
 </section>
