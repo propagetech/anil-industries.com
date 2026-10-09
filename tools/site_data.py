@@ -198,3 +198,21 @@ FAQ = [
      "finish, hardness, coil or cut length, the quantity and your delivery location. Our quote "
      "form lays these out for you."),
 ]
+
+# Concept icons from the Noun Project, all CC BY 3.0. slot -> (noun id, slug, creator).
+# Slots are the APPLICATIONS ids plus the four hardening steps. Fetched, traced and recoloured
+# by tools/noun-icons.py into public/imgs/noun-<slug>-<id>.svg; build.py adds the credits.
+NOUN_ICONS = {
+    "saw-blades": (4393746, "circular-saw-blade", "Petr Andel"),
+    "stone-cutting": (3314252, "marble-cutter", "Vectors Point"),
+    "automotive": (7634829, "car", "Docktor Icon Shop"),
+    "compressors-engineering": (8277136, "compressor", "kusuma potter"),
+    "textile": (5302367, "cone-thread", "DinosoftLabs"),
+    "leather-foam": (8485809, "leather", "Circlon Tech"),
+    "medical-office": (170849, "scalpel", "Umut Büyükekmekci"),
+    "tools-knives": (7977227, "coil-spring", "Abu Ibrahim Icon"),
+    "harden": (5170716, "furnace", "Design Circle"),
+    "quench": (5394181, "quenching", "Andi Nur Abdillah"),
+    "temper": (6257398, "thermometer", "leins"),
+    "protect": (8482040, "gas-cylinder", "Nursa"),
+}

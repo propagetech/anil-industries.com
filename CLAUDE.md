@@ -46,6 +46,11 @@ Research: `docs/research/` (competitors, keywords, design benchmark).
   every number, grade code and label. Caps only via `text-transform`.
 - Anti-template rules (binding): no centred hero, no three-icon-card rows, radius <= 2px, no gradient
   washes, no carousels / counters / scroll fade-ins, no stock photos, every button names its result.
+- Concept icons: 12 Noun Project CC BY 3.0 line icons in `--ink-2`, only on dense text grids (the
+  8 applications on `/applications/` and both product pages' application lists, and the 4 H&T
+  process steps). Listed in `NOUN_ICONS` in `site_data.py`; `python3 tools/noun-icons.py` fetches,
+  traces and recolours them, `tools/noun-search.py <term>` finds CC BY candidates. `build.py` adds
+  the `title` credit and a per-page credits comment; `docs/icon-credits.md` is the full table.
 - Container colour rules on dark sections use `:where()` so components (`.card-uk__name`, `.eyebrow`)
   keep their own colour. Do not raise their specificity.
 

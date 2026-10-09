@@ -16,8 +16,8 @@ import sys
 from urllib.parse import quote
 
 sys.path.insert(0, os.path.dirname(__file__))
-from site_data import (APPLICATIONS, CHEM, CHEM_COLS, DOMAIN, EQ, EQ_COLS, FAQ, MAPS_URL, ORG,
-                       PACKING, PROCESS, PRODUCTS)
+from site_data import (APPLICATIONS, CHEM, CHEM_COLS, DOMAIN, EQ, EQ_COLS, FAQ, MAPS_URL, NOUN_ICONS,
+                       ORG, PACKING, PROCESS, PRODUCTS)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Only public/ is published (GitHub Pages preview and Cloudflare Pages output directory).
@@ -475,6 +475,20 @@ def chem_table():
 </div>'''
 
 
+def noun_img(p, slot, cls):
+    """Decorative Noun Project concept icon (alt=""), credited in its title."""
+    nid, slug, creator = NOUN_ICONS[slot]
+    credit = "%s by %s from Noun Project (CC BY 3.0)" % (slug.replace("-", " "), creator)
+    return (f'<img class="{cls}" src="{p}imgs/noun-{slug}-{nid}.svg" width="40" height="40" alt="" '
+            f'title="{esc_attr(credit)}">')
+
+
+def noun_credits(slots):
+    """One consolidated credits comment per page, as the CC BY attribution asks."""
+    items = "; ".join("%s by %s" % (NOUN_ICONS[s][1].replace("-", " "), NOUN_ICONS[s][2]) for s in slots)
+    return "<!-- Icons from the Noun Project, CC BY 3.0: %s -->\n" % items
+
+
 def joinlist(items):
     return "; ".join([items[0]] + [x[0].lower() + x[1:] for x in items[1:]])
 
@@ -763,7 +777,7 @@ def product_page(key):
                 "quenched, then tempered in an inert atmosphere to avoid oxidation. It arrives with its "
                 "spring properties set, ready to blank or form.")
         apps = [a for a in APPLICATIONS if a[2]]
-        app_list = "".join(f'<li><h3><a href="{p}applications/#{a[0]}">{E(a[1])}</a></h3><p>{E(joinlist(a[2]))}.</p></li>' for a in apps)
+        app_list = "".join(f'<li>{noun_img(p, a[0], "applist__icon")}<div><h3><a href="{p}applications/#{a[0]}">{E(a[1])}</a></h3><p>{E(joinlist(a[2]))}.</p></div></li>' for a in apps)
         finishes = [("Scaleless grey", "fin-grey"), ("Scaleless bright", "fin-bright"), ("Scaleless blue", "fin-blue"),
                     ("Polished bright", "fin-pbright"), ("Polished blue", "fin-pblue"), ("Polished bronze", "fin-bronze"),
                     ("Polished gold", "fin-gold")]
@@ -773,10 +787,10 @@ def product_page(key):
   {sec_head("02", "Process")}
   <h2 id="h-process-ht">How the strip is hardened and tempered</h2>
   <ol class="steps">
-    <li><span class="steps__n">01</span><div><h3>Harden</h3><p>The strip is heated above the critical transformation temperature for its grade.</p></div></li>
-    <li><span class="steps__n">02</span><div><h3>Quench</h3><p>It is cooled rapidly, which makes it fully hard.</p></div></li>
-    <li><span class="steps__n">03</span><div><h3>Temper</h3><p>It is reheated to a lower temperature and held there for a set time, trading a little hardness for toughness and spring.</p></div></li>
-    <li><span class="steps__n">04</span><div><h3>Protect</h3><p>All of this happens in an inert atmosphere, so the surface does not oxidise.</p></div></li>
+    <li><span class="steps__n">01</span><div>{noun_img(p, "harden", "steps__icon")}<h3>Harden</h3><p>The strip is heated above the critical transformation temperature for its grade.</p></div></li>
+    <li><span class="steps__n">02</span><div>{noun_img(p, "quench", "steps__icon")}<h3>Quench</h3><p>It is cooled rapidly, which makes it fully hard.</p></div></li>
+    <li><span class="steps__n">03</span><div>{noun_img(p, "temper", "steps__icon")}<h3>Temper</h3><p>It is reheated to a lower temperature and held there for a set time, trading a little hardness for toughness and spring.</p></div></li>
+    <li><span class="steps__n">04</span><div>{noun_img(p, "protect", "steps__icon")}<h3>Protect</h3><p>All of this happens in an inert atmosphere, so the surface does not oxidise.</p></div></li>
   </ol>
 </section>
 
@@ -799,6 +813,7 @@ def product_page(key):
   <ul class="applist">{app_list}</ul>
 </section>'''
         faqs = [FAQ[0], FAQ[5], FAQ[6], FAQ[1]]
+        icons = [a[0] for a in apps] + ["harden", "quench", "temper", "protect"]
     else:
         title = "Cold Rolled High Carbon Steel Strips | Anil Industries"
         desc = ("Cold rolled high carbon steel strip, 0.20 to 4.50 mm thick, 12.5 to 450 mm wide, in C 45 "
@@ -808,7 +823,8 @@ def product_page(key):
                 "annealing and/or temper rolling. The result is strip with a wide range of surface finish "
                 "and closer thickness tolerances.")
         apps = [a for a in APPLICATIONS if a[3]]
-        app_list = "".join(f'<li><h3><a href="{p}applications/#{a[0]}">{E(a[1])}</a></h3><p>{E(joinlist(a[3]))}.</p></li>' for a in apps)
+        icons = [a[0] for a in apps]
+        app_list = "".join(f'<li>{noun_img(p, a[0], "applist__icon")}<div><h3><a href="{p}applications/#{a[0]}">{E(a[1])}</a></h3><p>{E(joinlist(a[3]))}.</p></div></li>' for a in apps)
         detail = f'''
 <section class="block" aria-labelledby="h-props">
   {sec_head("02", "Properties")}
@@ -874,7 +890,7 @@ def product_page(key):
   </aside>
 </div>
 {cta_band(p, "Quote for " + prod["short"].lower() + " strip", "Send the grade, thickness, width, finish, edge and quantity. We reply by email.", key)}
-</main>
+{noun_credits(icons)}</main>
 '''
     schema = graph(
         org_ref(),
@@ -969,7 +985,7 @@ def page_applications():
         if crl:
             cols.append(f'<div class="app__col"><p class="label">From cold rolled strip</p><ul>{"".join("<li>" + E(x) + "</li>" for x in crl)}</ul><a class="arrow-link" href="{p}{PRODUCTS["cr"]["slug"]}">Cold rolled spec</a></div>')
         arts.append(f'''<article class="app" id="{aid}" aria-labelledby="{aid}-h">
-  <header class="app__head"><span class="app__n">{i + 1:02d}</span><h2 id="{aid}-h">{E(name)}</h2></header>
+  <header class="app__head">{noun_img(p, aid, "app__icon")}<span class="app__n">{i + 1:02d}</span><h2 id="{aid}-h">{E(name)}</h2></header>
   <div class="app__cols">{"".join(cols)}</div>
 </article>''')
     body = f'''<main id="main">
@@ -984,7 +1000,7 @@ def page_applications():
   </div>
 </section>
 {cta_band(p, "Making something not listed here?", "Send us a drawing or a sample description and we will suggest the strip.")}
-</main>
+{noun_credits([a[0] for a in APPLICATIONS])}</main>
 '''
     schema = graph(org_ref(), page_node("applications/", title, desc), breadcrumb([("Applications", "applications/")]))
     return dict(slug="applications/", title=title, desc=desc, schema=schema, active="applications", body=body)
